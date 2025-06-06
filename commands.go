@@ -13,28 +13,28 @@ type Cmdflags struct {
 }
 
 func NewCmdFlags() *Cmdflags {
-	cmd := Cmdflags{}
-	flag.StringVar(&cmd.Add, "add", "", "add a new todo")
-	flag.IntVar(&cmd.Toggle, "toggle", -1, "add a new todo")
-	flag.BoolVar(&cmd.List, "list", false, "add a new todo")
-	flag.IntVar(&cmd.Delete, "delete", -1, "add a new todo")
+	cf := Cmdflags{}
+	flag.StringVar(&cf.Add, "add", "", "add a new todo")
+	flag.IntVar(&cf.Toggle, "toggle", -1, "mark as completed")
+	flag.BoolVar(&cf.List, "list", false, "List all the todos")
+	flag.IntVar(&cf.Delete, "del", -1, "Delete a todo entry")
 
 	flag.Parse()
 
-	return &cmd
+	return &cf
 }
 func (cf *Cmdflags) Execute(todos *Todos) {
 	switch {
 	case cf.Add != "":
 		todos.Add(cf.Add)
 	case cf.Toggle != -1:
-		todos.Complete(cf.Toggle)
+		todos.Toggle(cf.Toggle)
 	case cf.List:
 		todos.Display()
 	case cf.Delete != -1:
 		todos.Delete(cf.Delete)
 	default:
-		fmt.Println("invalid Flag")
+		fmt.Println("Usage: todo [options...]\n--add	To add todo\n--toggle To mark todo as completed\n--list	To list all the current todos\n--del To delete a todo entry")
 	}
 
 }
