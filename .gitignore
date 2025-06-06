@@ -10,3 +10,5 @@ coverage.*
 profile.covgo.work
 go.work.sum
 .env
+
+/bin/
